@@ -3,6 +3,35 @@ import FormPart from './FormPart'
 import Listitem from './Listitem'
 
 function Page() {
+
+    const arr = [
+        {
+            id : 1,
+            arrtask : "Study",
+            arrduedate : "04/11/2021",
+        },
+        {
+            id : 2,
+            arrtask : "Gym",
+            arrduedate : "05/11/2021",
+        },
+        {
+            id : 3,
+            arrtask : "Tafri",
+            arrduedate : "08/11/2021",
+        },
+        {
+            id : 4,
+            arrtask : "Assignment",
+            arrduedate : "01/11/2021",
+        },
+        {
+            id : 5,
+            arrtask : "Gaming",
+            arrduedate : "09/11/2021",
+        },
+    ];
+
     return (
         <>
             {/* <div><h1>todo</h1></div> */}
@@ -19,10 +48,13 @@ function Page() {
 
                                     <FormPart/>
 
-                                    <Listitem task="testing1"/>
-                                    <Listitem task="testing2"/>
-                                    <Listitem task="testing3"/>
-                                    {/* <Listitem task="testing4"/> */}
+                                    {arr.map((item) => (
+                                        <Listitem 
+                                            key={item.id} 
+                                            task={item.arrtask} 
+                                            duedate={item.arrduedate}
+                                        />
+                                    ))}
 
                                 </div>
                             </div>
