@@ -2,12 +2,12 @@ import React from 'react'
 import { useState } from 'react';
 
 function Listitem(props) {
-    const [ticked , unticked] = useState(true);
+    const [ticked , setTicked] = useState(true);
 
     const handleRadioChange = () => {
-        // if(ticked === true) unticked(false);
-        // else unticked(true);
-        ticked ? unticked(false) : unticked(true);
+        // if(ticked === true) setTicked(false);
+        // else setTicked(true);
+        ticked ? setTicked(false) : setTicked(true);
     }
 
     return (

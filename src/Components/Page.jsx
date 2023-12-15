@@ -1,68 +1,73 @@
 import React from 'react'
 import FormPart from './FormPart'
 import Listitem from './Listitem'
+import PageHeading from './PageHeading';
+import { useState } from 'react';
+import MainCard from './MainCard';
 
 function Page() {
+    const [arr , setArr] = useState([
+                                        {
+                                            id : 1,
+                                            arrtask : "Study",
+                                            arrduedate : "04/11/2021",
+                                        },
+                                        {
+                                            id : 2,
+                                            arrtask : "Gym",
+                                            arrduedate : "05/11/2021",
+                                        },
+                                        {
+                                            id : 3,
+                                            arrtask : "Tafri",
+                                            arrduedate : "08/11/2021",
+                                        },
+                                    ])
 
-    const arr = [
-        {
-            id : 1,
-            arrtask : "Study",
-            arrduedate : "04/11/2021",
-        },
-        {
-            id : 2,
-            arrtask : "Gym",
-            arrduedate : "05/11/2021",
-        },
-        {
-            id : 3,
-            arrtask : "Tafri",
-            arrduedate : "08/11/2021",
-        },
-        {
-            id : 4,
-            arrtask : "Assignment",
-            arrduedate : "01/11/2021",
-        },
-        {
-            id : 5,
-            arrtask : "Gaming",
-            arrduedate : "09/11/2021",
-        },
-    ];
+    const[newTask , setNewTask] = useState();
+    const[newDate , setNewDate] = useState();
+
+    const handleNewItem = (event) => {
+        //Add button click krte hi page refresh horha tha
+        //usko htane ke liye add ki ye line
+        event.preventDefault();  // Prevent the default form submission behavior
+
+        let obj = {id : arr.length + 1,
+                   arrtask : `${newTask}` ,
+                   arrduedate : `${newDate}`}
+
+        let tempArr = [...arr , obj];
+
+        setArr(tempArr);
+
+        //Taaki button dabane ke baad text area and date area clear hojaye
+        setNewTask('')
+        setNewDate('')
+    }
 
     return (
         <>
-            {/* <div><h1>todo</h1></div> */}
-            {/* <section className="vh-100" style={{ backgroundColor: "#e2d5de" }} data-bs-theme="dark"> */}
-            <section style={{ backgroundColor: "#e2d5de" , minHeight: "100vh"}} data-bs-theme="dark">
-                <div className="container py-5 h-100">
-                    <div className="row d-flex justify-content-center align-items-center h-100">
-                        <div className="col col-xl-10">
+           <MainCard>
+                {/* jo kuchh bhi <PageHeading></PageHeading> ke beeche me wrap krunga
+                vo sb as {props.children} pass hojaega PageHeading.jsx me */}
+                <PageHeading>Todo App</PageHeading>
 
-                            <div className="card" style={{ borderRadius: "15px" }}>
-                                <div className="card-body p-5">
+                <FormPart
+                    newTask = {newTask}
+                    setNewTask = {setNewTask}
+                    newDate = {newDate}
+                    setNewDate = {setNewDate}
+                    handleNewItem = {handleNewItem}
+                />
 
-                                    <h2 className="mb-3">Todo App</h2>
-
-                                    <FormPart/>
-
-                                    {arr.map((item) => (
-                                        <Listitem 
-                                            key={item.id} 
-                                            task={item.arrtask} 
-                                            duedate={item.arrduedate}
-                                        />
-                                    ))}
-
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-            </section>
+                {arr.map((item) => (
+                    <Listitem 
+                        key={item.id} 
+                        task={item.arrtask} 
+                        duedate={item.arrduedate}
+                    />
+                ))}
+           </MainCard>
         </>
     )
 }
