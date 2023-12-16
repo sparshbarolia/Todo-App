@@ -8,33 +8,31 @@ import MainCard from './MainCard';
 function Page() {
     const [arr , setArr] = useState([
                                         {
-                                            id : 1,
                                             arrtask : "Study",
-                                            arrduedate : "04/11/2021",
+                                            arrduedate : "2023-12-19",
                                         },
                                         {
-                                            id : 2,
                                             arrtask : "Gym",
-                                            arrduedate : "05/11/2021",
+                                            arrduedate : "2023-12-01",
                                         },
                                         {
-                                            id : 3,
-                                            arrtask : "Tafri",
-                                            arrduedate : "08/11/2021",
+                                            arrtask : "Yoga",
+                                            arrduedate : "2023-12-02",
                                         },
                                     ])
 
-    const[newTask , setNewTask] = useState();
-    const[newDate , setNewDate] = useState();
+    const[newTask , setNewTask] = useState("");
+    const[newDate , setNewDate] = useState("");
 
     const handleNewItem = (event) => {
         //Add button click krte hi page refresh horha tha
         //usko htane ke liye add ki ye line
         event.preventDefault();  // Prevent the default form submission behavior
 
-        let obj = {id : arr.length + 1,
-                   arrtask : `${newTask}` ,
-                   arrduedate : `${newDate}`}
+        let obj = {arrtask : `${newTask}` ,
+                arrduedate : `${newDate}`}
+                // arrtask : newTask ,
+                // arrduedate : newDate }
 
         let tempArr = [...arr , obj];
 
@@ -43,6 +41,17 @@ function Page() {
         //Taaki button dabane ke baad text area and date area clear hojaye
         setNewTask('')
         setNewDate('')
+    }
+
+    //taskName humko jis listItem ke remove ko click krenge uska milega
+    //map kra tha jaha vaha se le aenge
+    //jo taskname delete krna use arr se htadenge
+    const handleRemoveItem = (taskName) => {
+        const tempArr = arr.filter((val) => {
+            return val.arrtask !== taskName
+        })
+
+        setArr(tempArr)
     }
 
     return (
@@ -62,9 +71,12 @@ function Page() {
 
                 {arr.map((item) => (
                     <Listitem 
-                        key={item.id} 
+                        key={item.arrtask} 
                         task={item.arrtask} 
                         duedate={item.arrduedate}
+                        //ya to yaha taskName pas kro ya fir lititem me button me onClick me
+                        // handleRemoveItem={() => handleRemoveItem(item.arrtask)}
+                        handleRemoveItem={handleRemoveItem}
                     />
                 ))}
            </MainCard>
