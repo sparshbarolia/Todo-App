@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import FormPart from './FormPart'
 import Listitem from './Listitem'
 import PageHeading from './PageHeading';
@@ -21,26 +21,23 @@ function Page() {
                                         },
                                     ])
 
-    const[newTask , setNewTask] = useState("");
-    const[newDate , setNewDate] = useState("");
+    const newT = useRef();
+    const newD = useRef();
 
     const handleNewItem = (event) => {
         //Add button click krte hi page refresh horha tha
         //usko htane ke liye add ki ye line
         event.preventDefault();  // Prevent the default form submission behavior
 
-        let obj = {arrtask : `${newTask}` ,
-                arrduedate : `${newDate}`}
-                // arrtask : newTask ,
-                // arrduedate : newDate }
+        let obj = {arrtask : `${newT.current.value}` ,
+                   arrduedate : `${newD.current.value}`}
 
         let tempArr = [...arr , obj];
 
         setArr(tempArr);
 
-        //Taaki button dabane ke baad text area and date area clear hojaye
-        setNewTask('')
-        setNewDate('')
+        newT.current.value = ""
+        newD.current.value = ""
     }
 
     //taskName humko jis listItem ke remove ko click krenge uska milega
@@ -62,10 +59,8 @@ function Page() {
                 <PageHeading>Todo App</PageHeading>
 
                 <FormPart
-                    newTask = {newTask}
-                    setNewTask = {setNewTask}
-                    newDate = {newDate}
-                    setNewDate = {setNewDate}
+                    newT = {newT}
+                    newD = {newD}
                     handleNewItem = {handleNewItem}
                 />
 
