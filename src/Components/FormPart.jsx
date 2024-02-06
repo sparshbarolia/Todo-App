@@ -1,5 +1,6 @@
 import React from 'react'
 
+//props are coming from page.jsx
 function FormPart(props) {
   return (
     <>
