@@ -2,26 +2,38 @@ import React, { useRef } from 'react'
 import FormPart from './FormPart'
 import Listitem from './Listitem'
 import PageHeading from './PageHeading';
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import MainCard from './MainCard';
 
 function Page() {
     const [removeCount, setRemoveCount] = useState(0)
-    const [arr , setArr] = useState([
-                                        {
-                                            arrtask : "Study",
-                                            arrduedate : "2023-12-19",
-                                        },
-                                        {
-                                            arrtask : "Gym",
-                                            arrduedate : "2023-12-01",
-                                        },
-                                        {
-                                            arrtask : "Yoga",
-                                            arrduedate : "2023-12-02",
-                                        },
-                                    ])
+    const [arr , setArr] = useState()
 
+    
+
+    useEffect(()=>{
+        const TASKS = localStorage.getItem('tasks')
+        if(TASKS){
+            setArr(JSON.parse(TASKS))
+            console.log(TASKS)
+        }
+        else
+            setArr([
+                {
+                    arrtask : "Study",
+                    arrduedate : "2023-12-19",
+                },
+                {
+                    arrtask : "Gym",
+                    arrduedate : "2023-12-01",
+                },
+                {
+                    arrtask : "Yoga",
+                    arrduedate : "2023-12-02",
+                },
+            ])
+
+    },[])
     const newT = useRef();
     const newD = useRef();
 
@@ -48,7 +60,7 @@ function Page() {
         let tempArr = [...arr , obj];
 
         setArr(tempArr);
-
+        localStorage.setItem('tasks', JSON.stringify(tempArr))
         newT.current.value = ""
         newD.current.value = ""
     }
@@ -65,11 +77,13 @@ function Page() {
     }
     const handleRemoveItem = async(taskName) => {
         const data = await Wait(600)
-        const tempArr = arr.filter((val) => {
+        const tempArr = arr?.filter((val) => {
             return val.arrtask !== taskName
         })
 
         setArr(tempArr)
+        localStorage.setItem('tasks', JSON.stringify(tempArr))
+
     }
 
     return (
@@ -85,7 +99,7 @@ function Page() {
                     handleNewItem = {Item}
                 />
 
-                {arr.map((item) => (
+                {arr?.map((item) => (
                     <Listitem 
                         key={item.arrtask} 
                         task={item.arrtask} 

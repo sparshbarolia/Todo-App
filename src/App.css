@@ -1,0 +1,36 @@
+
+.flexCenter{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 1rem;
+}
+
+.slide-left{
+    overflow-x : hidden;
+    animation:  600ms ease-in slide-left;
+}
+
+.slide-right{
+    overflow-x : hidden;
+    animation : 600ms ease-in slide-right;
+}
+
+@keyframes slide-left{
+    from{
+        margin-left : 0%;
+    }
+    to{
+        margin-left : 100%;
+    }
+}
+
+@keyframes slide-right{
+    from{
+        margin-right : 0%;
+    }
+    to{
+        margin-right : 100%;
+    }
+}
+
